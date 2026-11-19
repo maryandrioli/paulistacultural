@@ -3,16 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#8a3b2e">
+<meta name="theme-color" content="#c8201e">
 <title>Paulista Cultural: visita técnica da Licenciatura em Pedagogia do IFSP São Roque</title>
 <meta name="description" content="Visita técnica Paulista Cultural: trajeto do ônibus e pontos de embarque, roteiro pelos espaços culturais da Avenida Paulista, pagamento e equipe.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#f6f5f1; --card:#ffffff; --ink:#1f2a2e; --muted:#536064;
-    --line:#dcd8cd; --accent:#1d6b5f; --accent-soft:#e3efec;
-    --bus:#8a3b2e; --bus-dark:#6f2d22; --bus-soft:#f7e9e5; --mark:#fff1b8;
+    /* Paleta inspirada na foto do MASP: vermelho dos pilares, concreto e vidro azulado */
+    --bg:#f3f1ec; --card:#ffffff; --ink:#24292c; --muted:#565e62;
+    --line:#dad6cd; --accent:#2f6f80; --accent-soft:#e2eef1;
+    --bus:#c8201e; --bus-dark:#9c1715; --bus-soft:#fbeae8; --mark:#fff1b8;
+    --concrete:#2d3134;
     --radius:14px;
   }
   *{box-sizing:border-box}
@@ -23,10 +25,15 @@
   :focus-visible{outline:3px solid #f0b429;outline-offset:2px}
 
   /* Cabeçalho */
-  header.hero{background:var(--bus);color:#fff;padding:22px 0 18px}
-  .kicker{text-transform:uppercase;letter-spacing:.07em;font-size:.78rem;opacity:.9;margin:0 0 4px}
-  header.hero h1{font-family:"Source Serif 4",Georgia,serif;font-size:2rem;line-height:1.15;margin:0 0 6px}
-  header.hero p{margin:0;font-size:.98rem;opacity:.95}
+  header.hero{position:relative;color:#fff;background:var(--concrete);min-height:320px;display:flex;align-items:flex-end;overflow:hidden}
+  header.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 40%}
+  header.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(26,28,30,.92) 0%,rgba(26,28,30,.6) 45%,rgba(26,28,30,.15) 100%)}
+  header.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:8px;background:var(--bus)}
+  header.hero .wrap{position:relative;width:100%;padding-top:28px;padding-bottom:30px}
+  .kicker{text-transform:uppercase;letter-spacing:.07em;font-size:.78rem;margin:0 0 6px;display:inline-block;background:var(--bus);padding:3px 9px;border-radius:4px}
+  header.hero h1{font-family:"Source Serif 4",Georgia,serif;font-size:2.3rem;line-height:1.1;margin:0 0 8px;text-shadow:0 2px 10px rgba(0,0,0,.35)}
+  header.hero p{margin:0;font-size:1rem;max-width:620px}
+  header.hero .credit{position:absolute;top:8px;right:10px;font-size:.72rem;opacity:.8;background:rgba(0,0,0,.35);padding:2px 7px;border-radius:4px}
 
   /* Abas */
   nav.tabs{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 2px 6px rgba(0,0,0,.04)}
@@ -45,7 +52,7 @@
   .note{font-size:.9rem;color:var(--muted);margin:8px 0 0}
 
   /* Ônibus */
-  .bus-box{background:var(--bus-soft);border:1px solid #e9cbc3;border-radius:var(--radius);padding:16px;margin-bottom:18px}
+  .bus-box{background:var(--bus-soft);border:1px solid #f1c6c2;border-radius:var(--radius);padding:16px;margin-bottom:18px}
   .summary{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
   .pill{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:.92rem}
   .pill b{color:var(--bus)}
@@ -57,10 +64,12 @@
   .hint{font-size:.95rem;color:var(--bus-dark);font-weight:600;margin:6px 0 0;min-height:1.4em}
   .tip{background:#fff;border-left:4px solid var(--bus);padding:12px 14px;border-radius:8px;font-size:.95rem;margin:14px 0 0}
   ol.route{list-style:none;margin:0;padding:0;position:relative}
-  ol.route::before{content:"";position:absolute;left:19px;top:16px;bottom:16px;width:3px;background:#e2c4bc}
+  ol.route::before{content:"";position:absolute;left:19px;top:16px;bottom:16px;width:3px;background:#efbcb7}
   .stop{position:relative;padding-left:52px;margin-bottom:12px}
   .num{position:absolute;left:0;top:14px;width:41px;height:41px;border-radius:50%;background:var(--bus);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;border:3px solid var(--bg);font-size:1.05rem}
   .stop.dest .num{background:var(--accent)}
+  .stop.direct .num{background:var(--concrete)}
+  ol.route.direct::before{display:none}
   .where{color:var(--muted);font-size:.93rem;margin:0 0 8px}
   .count{display:inline-block;background:var(--bus-soft);color:var(--bus-dark);font-weight:700;font-size:.85rem;border-radius:6px;padding:2px 9px;margin-bottom:6px}
   ul.people{margin:0 0 10px;padding-left:20px}
@@ -73,7 +82,7 @@
   /* Roteiro */
   .places{display:grid;gap:10px}
   details.place{background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
-  details.place[open]{border-color:var(--accent);box-shadow:0 2px 10px rgba(29,107,95,.08)}
+  details.place[open]{border-color:var(--accent);box-shadow:0 2px 10px rgba(47,111,128,.10)}
   details.place summary{list-style:none;cursor:pointer;display:flex;gap:12px;align-items:center;padding:14px 14px;min-height:64px}
   details.place summary::-webkit-details-marker{display:none}
   .pn{flex:0 0 38px;height:38px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center}
@@ -124,8 +133,8 @@
 
   @media(min-width:720px){
     body{font-size:18px}
-    header.hero{padding:32px 0 26px}
-    header.hero h1{font-size:2.5rem}
+    header.hero{min-height:400px}
+    header.hero h1{font-size:3rem}
     .btn{width:auto;display:inline-flex}
   }
   @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
@@ -134,6 +143,8 @@
 <body class="no-js">
 
 <header class="hero">
+  <img src="https://www.zapimoveis.com.br/blog/wp-content/uploads/2023/12/tudo-sobre-avenida-paulista.jpg" alt="Avenida Paulista com o edifício do MASP e seus pilares vermelhos" referrerpolicy="no-referrer">
+  <span class="credit">Foto: blog Zap Imóveis</span>
   <div class="wrap">
     <p class="kicker">IFSP Campus São Roque · Licenciatura em Pedagogia</p>
     <h1>Paulista Cultural</h1>
@@ -159,8 +170,8 @@
 
     <div class="bus-box">
       <div class="summary">
-        <span class="pill"><b>8</b> paradas</span>
-        <span class="pill"><b>25</b> passageiros</span>
+        <span class="pill"><b id="nStops">8</b> paradas</span>
+        <span class="pill"><b id="nPass">33</b> passageiros</span>
         <span class="pill">cerca de <b>65 km</b></span>
       </div>
       <a class="btn" href="https://www.google.com/maps/dir/-23.554757,-47.150227/-23.531893,-47.132761/-23.55373,-47.08987/-23.57964,-47.06081/-23.605636,-47.024287/-23.612581,-46.956899/-23.592098,-46.832799/Av.+Paulista,+52+-+Bela+Vista,+S%C3%A3o+Paulo+-+SP,+01310-900/">Abrir a rota completa no Google Maps</a>
@@ -173,6 +184,8 @@
     </div>
 
     <ol class="route" id="route"></ol>
+    <h3 style="margin-top:22px">Quem vai direto</h3>
+    <ol class="route direct" id="direct"></ol>
     <p class="note">Os pontos do km 44,5 e do km 36 da Raposo Tavares estão marcados com localização aproximada.</p>
   </section>
 
@@ -329,10 +342,10 @@
   <!-- PAGAMENTO -->
   <section class="panel" id="pagamento" role="tabpanel" aria-labelledby="t-pagamento">
     <h2 id="t-pagamento">Pagamento e prestação de contas</h2>
-    <p class="lead">O pagamento do transporte é feito por Pix.</p>
+    <p class="lead">O pagamento do transporte é feito por Pix, no valor de <b>R$ 40,00</b> por pessoa.</p>
 
     <div class="pix">
-      <p class="label">Chave Pix (e-mail)</p>
+      <p class="label">Valor do ônibus: R$ 40,00 · Chave Pix (e-mail)</p>
       <p class="key" id="pixkey">maryg@ifsp.edu.br</p>
       <button class="btn" type="button" id="copy">Copiar chave Pix</button>
       <p class="copied" id="copied" aria-live="polite"></p>
@@ -341,7 +354,7 @@
     <div class="card" style="margin-bottom:14px">
       <h3>Como pagar</h3>
       <ol class="steps">
-        <li>Faça o Pix para a chave <b>maryg@ifsp.edu.br</b>.</li>
+        <li>Faça um Pix de <b>R$ 40,00</b> para a chave <b>maryg@ifsp.edu.br</b>.</li>
         <li>Salve o comprovante.</li>
         <li>Envie o comprovante às estudantes organizadoras (Marya Clara e Ana Gabrielli) e aos representantes da sua turma.</li>
       </ol>
@@ -367,20 +380,20 @@
     <div class="grid two">
       <div class="card">
         <h3>Coordenação</h3>
-        <ul><li>Profa. Mary Grace Pereira Andrioli <small>(coordenadora)</small></li></ul>
+        <ul><li>Profa. Mary Grace <small>(coordenadora)</small></li></ul>
         <h3 style="margin-top:14px">Professores organizadores</h3>
         <ul>
           <li>Profa. Raquel da Silva</li>
-          <li>Prof. Sandro Heleno Moraes Zarpelão</li>
-          <li>Profa. Tatiane Monteiro</li>
-          <li>Profa. Gabriela Alias Rios</li>
+          <li>Prof. Sandro Zarpelão</li>
+          <li>Profa. Tatiane</li>
+          <li>Profa. Gabriela</li>
         </ul>
       </div>
       <div class="card">
         <h3>Equipe organizadora (estudantes)</h3>
         <ul>
-          <li>Marya Clara Calazans Paula <small>(PED 2)</small></li>
-          <li>Ana Gabrielli Rocha de Jesus</li>
+          <li>Marya Clara <small>(PED 2)</small></li>
+          <li>Ana Gabrielli</li>
         </ul>
       </div>
     </div>
@@ -427,44 +440,52 @@ show(location.hash.slice(1));
 /* Paradas do ônibus */
 const stops = [
   {where:"IFSP Campus São Roque", addr:"Rodovia Prefeito Quintino de Lima, 2100, Paisagem Colonial, São Roque", q:"-23.554757,-47.150227",
-   people:[["Isabelly Andrade Silva Oliveira","PED 2"],["Raroane Miguel de Oliveira","PED 2"],["Marya Clara Calazans Paula","PED 2"],["Geisiane Priscila Vieira Pinto","PED 2"],["Daniele da Costa Silva","PED 2"],["Maila Darilene de Souza Vasques","PED 2"],["Joice Vieira Leite","PED 4"]]},
+   people:[["Isabelly","PED 2"],["Raroane","PED 2"],["Marya Clara","PED 2"],["Geisiane Priscila","PED 2"],["Daniele","PED 2"],["Maila Darilene","PED 2"],["Joice","PED 4"],["Mauricio",""],["Bruno",""],["André",""],["Heloísa",""],["Profa. Mary Grace","professora"],["Prof. Sandro Zarpelão","professor"],["Profa. Raquel da Silva","professora"]]},
   {where:"Brasital: Terminal Rodoviário de São Roque", addr:"Av. Araçaí, 1, Centro, São Roque (ao lado do Estância Supermercados)", q:"-23.531893,-47.132761",
-   people:[["Jennifer Larissa dos Santos Fernandes","PED 2"],["Savio Augusto Pontes de Moraes","acompanhante"],["Heloísa Santos Lacerda","PED 2"],["Emmerson José Ferreira Pinto Junior","PED 2"],["Tamara Varjão de Carvalho Mariano","acompanhante"],["Rubia Rossini da Silva","PED 2"],["Guilherme Dantas Lopes da Silva","BAD 6"],["Yasmim Clara Nogueron Borba","PED 2"],["Rebeca Alves","PED 2"],["Lucas Vinicius Prestes Mendes","PED 2"],["Laura Stephanie Mascarenhas Oliveira","PED 2"]]},
+   people:[["Jennifer Larissa","PED 2"],["Savio Augusto","acompanhante"],["Heloísa Santos","PED 2"],["Emmerson José","PED 2"],["Tamara","acompanhante"],["Rubia","PED 2"],["Guilherme","BAD 6"],["Yasmim Clara","PED 2"],["Rebeca","PED 2"],["Lucas Vinicius","PED 2"],["Laura Stephanie","PED 2"]]},
   {where:"Mailasqui: km 54 da Raposo Tavares", addr:"Ponto anterior ao viaduto Vasco Barioni, sentido capital", q:"-23.55373,-47.08987",
-   people:[["Gabriel Phillip","PED 4"],["Eloah Crivellari",""],["Leonardo Fiuza",""]]},
+   people:[["Gabriel Phillip","PED 4"],["Eloah","PED 4"],["Leonardo","PED 2"]]},
   {where:"Alto da Serra", addr:"Ponto de ônibus na Rodovia Raposo Tavares, sentido capital", q:"-23.57964,-47.06081",
-   people:[["Isabella Oliveira Martins","PED 4"]]},
+   people:[["Isabella","PED 4"]]},
   {where:"Vargem Grande Paulista: km 44,5 da Raposo Tavares", addr:"Passarela de Vargem Grande Paulista, sentido capital", q:"-23.605636,-47.024287", approx:true,
-   people:[["Gabriela Cristina de Oliveira Godinho","PED 4"]]},
+   people:[["Gabriela Cristina","PED 4"]]},
   {where:"Cotia: km 36 da Raposo Tavares", addr:"Ponto de ônibus após o radar, sentido capital", q:"-23.612581,-46.956899", approx:true,
-   people:[["Raquel Pereira Rodrigues","PED 4"]]},
+   people:[["Raquel Pereira","PED 4"],["Mariana",""]]},
   {where:"Shopping Granja Vianna", addr:"Rodovia Raposo Tavares, km 23,5, Cotia", q:"-23.592098,-46.832799",
    people:[["Profa. Tatiane",""]]},
-  {where:"Destino: Av. Paulista, 52 (Japan House)", addr:"Bela Vista, São Paulo", q:"Av. Paulista, 52 - Bela Vista, São Paulo - SP", dest:true, people:[]}
+  {where:"Destino: Av. Paulista, 52 (Japan House)", addr:"Bela Vista, São Paulo", q:"Av. Paulista, 52 - Bela Vista, São Paulo - SP", dest:true, people:[]},
+  {where:"Direto na Casa das Rosas", addr:"Av. Paulista, 37 (não vai de ônibus; encontra o grupo no local)", q:"Casa das Rosas, Av. Paulista, 37, São Paulo", direct:true,
+   people:[["Larissa",""]]}
 ];
+const busTotal = stops.filter(s=>!s.direct).reduce((t,s)=>t+s.people.length,0);
+const busStops = stops.filter(s=>!s.direct).length;
+document.getElementById("nPass").textContent = busTotal;
+document.getElementById("nStops").textContent = busStops;
 
 const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
-const route = document.getElementById("route");
+const route = document.getElementById("route"), directBox = document.getElementById("direct");
+let busN = 0;
 stops.forEach((s,i)=>{
   const li = document.createElement("li");
-  li.className = "stop" + (s.dest ? " dest" : "");
+  li.className = "stop" + (s.dest ? " dest" : "") + (s.direct ? " direct" : "");
+  li.dataset.where = s.where;
   const n = s.people.length;
   const peopleHtml = s.dest
-    ? '<p class="note">Desembarque de todos os 25 passageiros.</p>'
-    : '<span class="count">' + n + (n===1 ? ' pessoa embarca' : ' pessoas embarcam') + '</span>' +
+    ? '<p class="note">Desembarque de todos os ' + busTotal + ' passageiros.</p>'
+    : '<span class="count">' + n + (s.direct ? (n===1 ? ' pessoa' : ' pessoas') : (n===1 ? ' pessoa embarca' : ' pessoas embarcam')) + '</span>' +
       '<ul class="people">' + s.people.map(p => '<li data-n="' + norm(p[0]) + '">' + p[0] + (p[1] ? ' <small>(' + p[1] + ')</small>' : '') + '</li>').join('') + '</ul>';
-  li.innerHTML = '<div class="num">' + (i+1) + '</div>' +
+  li.innerHTML = '<div class="num">' + (s.direct ? '★' : ++busN) + '</div>' +
     '<div class="card"><h3>' + s.where + '</h3><p class="where">' + s.addr + '</p>' + peopleHtml +
     '<a class="maplink" href="https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(s.q) + '">Ver este ponto no Google Maps</a>' +
     (s.approx ? '<p class="note">Localização aproximada.</p>' : '') + '</div>';
-  route.appendChild(li);
+  (s.direct ? directBox : route).appendChild(li);
 });
 
 const q = document.getElementById("q"), hint = document.getElementById("hint");
 q.addEventListener("input", ()=>{
   const term = norm(q.value.trim());
   let found = 0, first = null, firstName = "";
-  document.querySelectorAll(".stop").forEach((st, idx)=>{
+  document.querySelectorAll(".stop").forEach(st=>{
     let any = false;
     st.querySelectorAll("li[data-n]").forEach(li=>{
       const hit = term.length>=2 && li.dataset.n.includes(term);
@@ -472,10 +493,10 @@ q.addEventListener("input", ()=>{
       if(hit){any = true; found++;}
     });
     st.classList.toggle("dim", term.length>=2 && !any && !st.classList.contains("dest"));
-    if(any && !first){ first = st; firstName = stops[idx].where; }
+    if(any && !first){ first = st; firstName = st.dataset.where; }
   });
   if(term.length<2){hint.textContent="";return;}
-  hint.textContent = found===1 ? "Seu embarque: " + firstName + "." : found ? found + " nomes encontrados." : "Nenhum nome encontrado.";
+  hint.textContent = found===1 ? (first.classList.contains("direct") ? "Você vai direto: " + firstName.replace("Direto na ","") + "." : "Seu embarque: " + firstName + ".") : found ? found + " nomes encontrados." : "Nenhum nome encontrado.";
   if(first) first.scrollIntoView({behavior:"smooth",block:"center"});
 });
 
