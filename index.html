@@ -76,6 +76,26 @@
   ul.people li{margin:3px 0}
   ul.people small{color:var(--muted)}
   li.hit{background:var(--mark);border-radius:4px;font-weight:700}
+  /* Chamada de embarque */
+  .checkin{background:#fff;border:2px solid var(--concrete);border-radius:var(--radius);padding:12px 14px;margin:0 0 16px;box-shadow:0 4px 12px rgba(0,0,0,.06)}
+  .checkin h3{margin:0 0 4px}
+  .ck-count{font-size:1.05rem;margin:0 0 8px}
+  .ck-count b{color:var(--bus)}
+  .ck-bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:0 0 10px}
+  .ck-bar span{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .ck-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .ck-actions label{display:flex;align-items:center;gap:8px;min-height:40px;font-weight:600;cursor:pointer}
+  .ck-actions input{width:22px;height:22px;accent-color:var(--bus)}
+  .ck-reset{min-height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:#fff;font:600 .9rem "Source Sans 3",sans-serif;color:var(--muted);cursor:pointer;margin-left:auto}
+  ul.people li.pax{list-style:none;margin-left:-20px}
+  ul.people li.pax label{display:flex;align-items:center;gap:10px;min-height:40px;cursor:pointer;padding:2px 6px;border-radius:6px}
+  ul.people li.pax input{flex:0 0 auto;width:24px;height:24px;accent-color:var(--accent)}
+  ul.people li.pax.on label{color:var(--muted);text-decoration:line-through}
+  ul.people li.pax.on small{text-decoration:none}
+  .only-missing ul.people li.pax.on{display:none}
+  .only-missing .stop.complete{display:none}
+  .stop .done{display:none;font-weight:700;color:var(--accent);font-size:.9rem;margin:0 0 6px}
+  .stop.complete .done{display:block}
   .stop.dim{opacity:.35}
   .maplink{display:inline-flex;align-items:center;min-height:40px;font-size:.95rem;font-weight:700;color:var(--bus)}
 
@@ -181,6 +201,17 @@
       <p class="hint" id="hint" aria-live="polite"></p>
 
       <p class="tip">Do Brasital até o km 54, o ônibus segue pela Av. Araçaí e pela Av. Prefeito Zito Garcia até a Raposo Tavares, no Jardim Villaça, e continua no sentido capital. O ponto de Mailasqui fica à direita, antes do viaduto Vasco Barioni, sem necessidade de retorno.</p>
+    </div>
+
+    <div class="checkin" id="checkin">
+      <h3>Chamada de embarque</h3>
+      <p class="ck-count" id="ckCount"></p>
+      <div class="ck-bar" aria-hidden="true"><span id="ckBar"></span></div>
+      <div class="ck-actions">
+        <label><input type="checkbox" id="ckOnly"> Mostrar só quem falta</label>
+        <button type="button" class="ck-reset" id="ckReset">Limpar marcações</button>
+      </div>
+      <p class="note">Marque cada pessoa ao embarcar. As marcações ficam salvas apenas neste celular ou computador.</p>
     </div>
 
     <ol class="route" id="route"></ol>
@@ -474,7 +505,11 @@ stops.forEach((s,i)=>{
   const peopleHtml = s.dest
     ? '<p class="note">Desembarque de todos os ' + busTotal + ' passageiros.</p>'
     : '<span class="count">' + n + (s.direct ? (n===1 ? ' pessoa' : ' pessoas') : (n===1 ? ' pessoa embarca' : ' pessoas embarcam')) + '</span>' +
-      '<ul class="people">' + s.people.map(p => '<li data-n="' + norm(p[0]) + '">' + p[0] + (p[1] ? ' <small>(' + p[1] + ')</small>' : '') + '</li>').join('') + '</ul>';
+      '<p class="done">✔ Todos presentes</p>' +
+      '<ul class="people">' + s.people.map(p => {
+        const id = i + "|" + p[0];
+        return '<li class="pax" data-n="' + norm(p[0]) + '" data-id="' + id + '"><label><input type="checkbox" data-id="' + id + '"><span>' + p[0] + (p[1] ? ' <small>(' + p[1] + ')</small>' : '') + '</span></label></li>';
+      }).join('') + '</ul>';
   li.innerHTML = '<div class="num">' + (s.direct ? '★' : ++busN) + '</div>' +
     '<div class="card"><h3>' + s.where + '</h3><p class="where">' + s.addr + '</p>' + peopleHtml +
     '<a class="maplink" href="https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(s.q) + '">Ver este ponto no Google Maps</a>' +
@@ -500,6 +535,39 @@ q.addEventListener("input", ()=>{
   hint.textContent = found===1 ? (first.classList.contains("direct") ? "Você vai direto: " + firstName.replace("Direto na ","") + "." : "Seu embarque: " + firstName + ".") : found ? found + " nomes encontrados." : "Nenhum nome encontrado.";
   if(first) first.scrollIntoView({behavior:"smooth",block:"center"});
 });
+
+/* Chamada de embarque (marcações salvas só neste aparelho) */
+const CK_KEY = "paulistacultural-chamada-v1";
+let ck = {};
+try{ ck = JSON.parse(localStorage.getItem(CK_KEY) || "{}") || {}; }catch(e){ ck = {}; }
+function ckSave(){ try{ localStorage.setItem(CK_KEY, JSON.stringify(ck)); }catch(e){} }
+function ckUpdate(){
+  let busOn = 0, dirOn = 0, dirTotal = 0;
+  document.querySelectorAll(".stop").forEach(st=>{
+    const boxes = [...st.querySelectorAll("input[data-id]")];
+    let on = 0;
+    boxes.forEach(b=>{ b.checked = !!ck[b.dataset.id]; b.closest("li").classList.toggle("on", b.checked); if(b.checked) on++; });
+    st.classList.toggle("complete", boxes.length>0 && on===boxes.length);
+    if(st.classList.contains("direct")){ dirOn += on; dirTotal += boxes.length; } else busOn += on;
+  });
+  const falta = busTotal - busOn;
+  document.getElementById("ckCount").innerHTML = "<b>" + busOn + "</b> de " + busTotal + " no ônibus · " +
+    (falta===0 ? "todos embarcaram" : "falta" + (falta===1 ? " " : "m ") + "<b>" + falta + "</b>") +
+    (dirTotal ? "<br><small>Direto na Casa das Rosas: " + dirOn + " de " + dirTotal + "</small>" : "");
+  document.getElementById("ckBar").style.width = (busTotal ? busOn/busTotal*100 : 0) + "%";
+}
+document.addEventListener("change", e=>{
+  const b = e.target;
+  if(b.matches("input[data-id]")){ if(b.checked) ck[b.dataset.id] = 1; else delete ck[b.dataset.id]; ckSave(); ckUpdate(); }
+});
+document.getElementById("ckOnly").addEventListener("change", e=>{
+  document.getElementById("onibus").classList.toggle("only-missing", e.target.checked);
+});
+document.getElementById("ckReset").addEventListener("click", ()=>{
+  if(Object.keys(ck).length===0) return;
+  ck = {}; ckSave(); ckUpdate();
+});
+ckUpdate();
 
 /* Copiar chave Pix */
 document.getElementById("copy").addEventListener("click", async ()=>{
