@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paulista Cultural: visita técnica da Licenciatura em Pedagogia do IFSP São Roque</title>
+<meta name="description" content="Roteiro da visita técnica Paulista Cultural: equipe, percurso pelos espaços culturais da Avenida Paulista e trajeto do ônibus com os pontos de embarque.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f5f1; --card:#ffffff; --ink:#1f2a2e; --muted:#566367;
+    --line:#dcd8cd; --accent:#1d6b5f; --accent-soft:#e3efec;
+    --bus:#8a3b2e; --bus-soft:#f6e7e3; --mark:#fff1b8;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,sans-serif;font-size:18px;line-height:1.55}
+  a{color:var(--accent)}
+  .wrap{max-width:920px;margin:0 auto;padding:0 20px}
+  header.hero{background:var(--accent);color:#fff;padding:44px 0 36px}
+  header.hero .kicker{text-transform:uppercase;letter-spacing:.08em;font-size:.85rem;opacity:.85;margin:0 0 6px}
+  header.hero h1{font-family:"Source Serif 4",Georgia,serif;font-size:2.4rem;line-height:1.15;margin:0 0 10px}
+  header.hero p{margin:0;max-width:680px;opacity:.95}
+  nav.toc{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+  nav.toc .wrap{display:flex;gap:6px;flex-wrap:wrap;padding:10px 20px}
+  nav.toc a{text-decoration:none;font-weight:600;font-size:.95rem;padding:6px 12px;border-radius:999px;color:var(--ink)}
+  nav.toc a:hover{background:var(--accent-soft)}
+  nav.toc a.bus{background:var(--bus);color:#fff}
+  section{padding:38px 0 8px}
+  h2{font-family:"Source Serif 4",Georgia,serif;font-size:1.7rem;margin:0 0 6px}
+  .lead{color:var(--muted);margin:0 0 22px}
+  .grid{display:grid;gap:16px}
+  @media(min-width:720px){.grid.two{grid-template-columns:1fr 1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+  .card h3{margin:0 0 8px;font-size:1.15rem}
+  .team ul{margin:0;padding-left:20px}
+  .team li{margin:3px 0}
+  .team small{color:var(--muted)}
+
+  /* Percurso a pé */
+  .walk{list-style:none;margin:0;padding:0;counter-reset:w}
+  .walk li{display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-bottom:1px dashed var(--line)}
+  .walk li:last-child{border-bottom:0}
+  .walk .n{flex:0 0 36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .walk b{display:block}
+  .walk span{color:var(--muted);font-size:.95rem}
+
+  /* Locais */
+  .place{scroll-margin-top:70px}
+  .place .meta{font-size:.95rem;color:var(--muted);margin:0 0 10px}
+  .place dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:10px 0 12px;font-size:.95rem}
+  .place dt{font-weight:600}
+  .place dd{margin:0}
+  .refs{font-size:.88rem;color:var(--muted);margin:8px 0 0}
+  .refs a{color:var(--muted)}
+
+  /* Ônibus */
+  #onibus{background:var(--bus-soft);margin-top:34px;padding-bottom:36px;border-top:4px solid var(--bus)}
+  #onibus h2{color:var(--bus)}
+  .btn{display:inline-block;background:var(--bus);color:#fff;text-decoration:none;font-weight:600;border-radius:8px;padding:12px 18px;margin:4px 0 18px}
+  .summary{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 16px}
+  .pill{background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:.95rem}
+  .pill b{color:var(--bus)}
+  .search{width:100%;padding:13px 14px;font-size:1rem;border:1px solid var(--line);border-radius:8px;background:#fff;margin-bottom:6px;font-family:inherit}
+  .hint{font-size:.92rem;color:var(--muted);margin:0 0 18px;min-height:1.3em}
+  ol.route{list-style:none;margin:0;padding:0;position:relative}
+  ol.route::before{content:"";position:absolute;left:19px;top:10px;bottom:10px;width:3px;background:#e2c4bc}
+  .stop{position:relative;padding-left:56px;margin-bottom:14px}
+  .num{position:absolute;left:0;top:12px;width:41px;height:41px;border-radius:50%;background:var(--bus);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;border:3px solid var(--bus-soft)}
+  .stop.dest .num{background:var(--accent)}
+  .stop .card h3{margin:0 0 2px}
+  .where{color:var(--muted);font-size:.95rem;margin:0 0 10px}
+  .count{display:inline-block;background:var(--bus-soft);color:var(--bus);font-weight:600;font-size:.88rem;border-radius:6px;padding:2px 9px;margin-bottom:8px}
+  ul.people{margin:0 0 10px;padding-left:20px}
+  ul.people li{margin:2px 0}
+  ul.people small{color:var(--muted)}
+  li.hit{background:var(--mark);border-radius:4px}
+  .stop.dim{opacity:.35}
+  .maplink{font-size:.95rem;font-weight:600;color:var(--bus)}
+  .note{font-size:.9rem;color:var(--muted);margin:6px 0 0}
+  .tip{background:#fff;border-left:4px solid var(--bus);padding:12px 16px;border-radius:6px;font-size:.95rem;margin:0 0 20px}
+
+  footer{padding:30px 0 50px;font-size:.9rem;color:var(--muted)}
+  footer h2{font-size:1.2rem;color:var(--ink)}
+  footer ul{padding-left:20px}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker">IFSP Campus São Roque · Licenciatura em Pedagogia</p>
+    <h1>Paulista Cultural</h1>
+    <p>Visita técnica aos espaços culturais da Avenida Paulista com as turmas do 2º e do 4º semestres, realizada no âmbito do Edital de Ações Universais 2026 do IFSP Campus São Roque.</p>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Seções">
+  <div class="wrap">
+    <a href="#equipe">Equipe</a>
+    <a href="#percurso">Percurso na Paulista</a>
+    <a href="#locais">Espaços visitados</a>
+    <a href="#onibus" class="bus">Ônibus e embarques</a>
+    <a href="#referencias">Referências</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="equipe" class="team">
+    <h2>Equipe</h2>
+    <p class="lead">Responsáveis pela organização e pelo acompanhamento da visita.</p>
+    <div class="grid two">
+      <div class="card">
+        <h3>Coordenação</h3>
+        <ul><li>Profa. Mary Grace Pereira Andrioli <small>(coordenadora)</small></li></ul>
+        <h3 style="margin-top:16px">Professores organizadores</h3>
+        <ul>
+          <li>Profa. Raquel da Silva</li>
+          <li>Prof. Sandro Heleno Moraes Zarpelão</li>
+          <li>Profa. Tatiane Monteiro</li>
+          <li>Profa. Gabriela Alias Rios</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Equipe organizadora (estudantes)</h3>
+        <ul>
+          <li>Marya Clara Calazans Paula <small>(PED 2)</small></li>
+          <li>Ana Gabrielli Rocha de Jesus</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="percurso">
+    <h2>Percurso a pé na Avenida Paulista</h2>
+    <p class="lead">O ônibus deixa o grupo na Av. Paulista, 52, em frente à Japan House. A partir dali, o percurso segue a numeração da avenida, do início (próximo à estação Brigadeiro) em direção à estação Consolação, somando cerca de 3 km de caminhada.</p>
+    <div class="card">
+      <ol class="walk">
+        <li><div class="n">1</div><div><b><a href="#japan-house">Japan House São Paulo</a></b><span>Av. Paulista, 52. Ponto de chegada do ônibus.</span></div></li>
+        <li><div class="n">2</div><div><b><a href="#casa-das-rosas">Casa das Rosas</a></b><span>Av. Paulista, 37, no lado oposto da avenida, a poucos metros da Japan House.</span></div></li>
+        <li><div class="n">3</div><div><b><a href="#sesc">Sesc Avenida Paulista</a></b><span>Av. Paulista, 119.</span></div></li>
+        <li><div class="n">4</div><div><b><a href="#itau-cultural">Itaú Cultural</a></b><span>Av. Paulista, 149, vizinho ao Sesc.</span></div></li>
+        <li><div class="n">5</div><div><b><a href="#fiesp">Centro Cultural Fiesp</a></b><span>Av. Paulista, 1313, em frente à estação Trianon-Masp. Trecho mais longo de caminhada.</span></div></li>
+        <li><div class="n">6</div><div><b><a href="#ims">Instituto Moreira Salles (IMS Paulista)</a></b><span>Av. Paulista, 2424, próximo à estação Consolação.</span></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="locais">
+    <h2>Espaços visitados</h2>
+    <p class="lead">Resumo de cada espaço, com endereço, horário de funcionamento e site oficial. Os horários podem mudar; recomenda-se confirmá-los nos sites antes da visita.</p>
+    <div class="grid">
+
+      <article class="card place" id="japan-house">
+        <h3>Japan House São Paulo</h3>
+        <p>Centro cultural criado por iniciativa do governo do Japão e inaugurado em 30 de abril de 2017. Foi a primeira unidade a abrir, antes das de Londres e Los Angeles, e apresenta a cultura japonesa contemporânea em áreas como arte, tecnologia, design e gastronomia, por meio de exposições, biblioteca e programação gratuita.</p>
+        <dl>
+          <dt>Endereço</dt><dd>Av. Paulista, 52, Bela Vista</dd>
+          <dt>Horário</dt><dd>Terça a sexta, das 10h às 18h; sábados, domingos e feriados, das 10h às 19h; fechada às segundas</dd>
+          <dt>Entrada</dt><dd>Gratuita</dd>
+          <dt>Site</dt><dd><a href="https://www.japanhousesp.com.br/">japanhousesp.com.br</a></dd>
+        </dl>
+      </article>
+
+      <article class="card place" id="casa-das-rosas">
+        <h3>Casa das Rosas</h3>
+        <p>Casarão em estilo clássico francês, rodeado por um jardim de roseiras, dedicado à literatura e à poesia. Tem como missão promover o conhecimento literário, preservar o patrimônio cultural e incentivar a criação artística. Foi reaberta em outubro de 2023, após restauro.</p>
+        <dl>
+          <dt>Endereço</dt><dd>Av. Paulista, 37, Bela Vista (próximo à estação Brigadeiro)</dd>
+          <dt>Horário</dt><dd>Museu: terça a domingo, das 10h às 17h30. Jardim: todos os dias, das 7h às 22h</dd>
+          <dt>Entrada</dt><dd>Gratuita</dd>
+          <dt>Site</dt><dd><a href="https://www.casadasrosas.org.br/">casadasrosas.org.br</a></dd>
+        </dl>
+      </article>
+
+      <article class="card place" id="sesc">
+        <h3>Sesc Avenida Paulista</h3>
+        <p>Unidade do Sesc inaugurada em 2018, em um edifício de 17 andares com exposições, biblioteca, espaço de brincar e programação cultural. No último andar fica o mirante, com vista panorâmica da avenida; o acesso é gratuito, mas exige agendamento prévio pelo aplicativo Credencial Sesc SP.</p>
+        <dl>
+          <dt>Endereço</dt><dd>Av. Paulista, 119, Bela Vista</dd>
+          <dt>Horário</dt><dd>Terça a sexta, das 10h às 21h; sábados, domingos e feriados, das 10h às 18h</dd>
+          <dt>Entrada</dt><dd>Gratuita (mirante com agendamento)</dd>
+          <dt>Site</dt><dd><a href="https://www.sescsp.org.br/unidades/avenida-paulista/">sescsp.org.br</a></dd>
+        </dl>
+      </article>
+
+      <article class="card place" id="itau-cultural">
+        <h3>Itaú Cultural</h3>
+        <p>Instituto dedicado à pesquisa e à produção de conteúdo cultural, com espaços para até três exposições simultâneas, sala de espetáculos, auditório e midiateca. Abriga o Espaço Olavo Setubal, com a Coleção Brasiliana Itaú, e, desde 2025, um andar de longa duração dedicado à arte moderna e contemporânea brasileira.</p>
+        <dl>
+          <dt>Endereço</dt><dd>Av. Paulista, 149, Bela Vista (próximo à estação Brigadeiro)</dd>
+          <dt>Horário</dt><dd>Terça a sábado, das 11h às 20h; domingos e feriados, das 11h às 19h</dd>
+          <dt>Entrada</dt><dd>Gratuita</dd>
+          <dt>Site</dt><dd><a href="https://www.itaucultural.org.br/">itaucultural.org.br</a></dd>
+        </dl>
+      </article>
+
+      <article class="card place" id="fiesp">
+        <h3>Centro Cultural Fiesp</h3>
+        <p>Complexo cultural administrado pelo Sesi-SP no edifício da Fiesp, com espaços projetados por Paulo Mendes da Rocha e abertos em 1998. Reúne Galeria de Arte, Galeria de Fotos, Teatro do Sesi-SP e a Galeria de Arte Digital instalada na fachada do prédio, com programação gratuita e visitas educativas para grupos escolares.</p>
+        <dl>
+          <dt>Endereço</dt><dd>Av. Paulista, 1313, Bela Vista (em frente à estação Trianon-Masp)</dd>
+          <dt>Horário</dt><dd>Terça a domingo, das 10h às 20h</dd>
+          <dt>Entrada</dt><dd>Gratuita</dd>
+          <dt>Site</dt><dd><a href="https://www.centroculturalfiesp.com.br/">centroculturalfiesp.com.br</a></dd>
+        </dl>
+      </article>
+
+      <article class="card place" id="ims">
+        <h3>Instituto Moreira Salles (IMS Paulista)</h3>
+        <p>Sede paulistana do Instituto Moreira Salles, inaugurada em 20 de setembro de 2017. O edifício, projetado pelo escritório Andrade Morettin Arquitetos, ocupa sete andares dedicados a exposições, sobretudo de fotografia, além de cinema, música, encontros e debates.</p>
+        <dl>
+          <dt>Endereço</dt><dd>Av. Paulista, 2424, Bela Vista (próximo à estação Consolação)</dd>
+          <dt>Horário</dt><dd>Terça a domingo e feriados, das 10h às 20h; às quintas, até as 22h</dd>
+          <dt>Entrada</dt><dd>Gratuita para as exposições</dd>
+          <dt>Site</dt><dd><a href="https://ims.com.br/">ims.com.br</a></dd>
+        </dl>
+      </article>
+
+    </div>
+  </section>
+
+</main>
+
+<section id="onibus">
+  <div class="wrap">
+    <h2>Trajeto do ônibus na ida e pontos de embarque</h2>
+    <p class="lead" style="color:var(--ink)">Saída do IFSP Campus São Roque, com destino à Av. Paulista, 52, pela Rodovia Raposo Tavares. Cada parada indica quem embarca nela.</p>
+
+    <div class="summary">
+      <span class="pill"><b>8</b> paradas</span>
+      <span class="pill"><b>25</b> passageiros</span>
+      <span class="pill">Percurso aproximado de <b>65 km</b></span>
+    </div>
+
+    <a class="btn" href="https://www.google.com/maps/dir/-23.554757,-47.150227/-23.531893,-47.132761/-23.55373,-47.08987/-23.57964,-47.06081/-23.605636,-47.024287/-23.612581,-46.956899/-23.592098,-46.832799/Av.+Paulista,+52+-+Bela+Vista,+S%C3%A3o+Paulo+-+SP,+01310-900/">Abrir a rota completa no Google Maps</a>
+
+    <p class="tip">Do Brasital até o km 54, o ônibus segue pela Av. Araçaí e pela Av. Prefeito Zito Garcia até a Raposo Tavares, no Jardim Villaça, e continua no sentido capital. O ponto de Mailasqui fica à direita, antes do viaduto Vasco Barioni, sem necessidade de retorno.</p>
+
+    <input class="search" id="q" type="search" placeholder="Digite seu nome para encontrar seu ponto de embarque" aria-label="Buscar nome">
+    <p class="hint" id="hint"></p>
+
+    <ol class="route" id="route"></ol>
+    <p class="note">Os pontos do km 44,5 e do km 36 da Raposo Tavares estão marcados com localização aproximada.</p>
+  </div>
+</section>
+
+<footer id="referencias">
+  <div class="wrap">
+    <h2>Referências</h2>
+    <ul>
+      <li>Japan House São Paulo. Site oficial: <a href="https://www.japanhousesp.com.br/">https://www.japanhousesp.com.br/</a>.</li>
+      <li>Casa das Rosas: Espaço Haroldo de Campos de Poesia e Literatura. Site oficial: <a href="https://www.casadasrosas.org.br/">https://www.casadasrosas.org.br/</a>.</li>
+      <li>Sesc São Paulo. Unidade Avenida Paulista: <a href="https://www.sescsp.org.br/unidades/avenida-paulista/">https://www.sescsp.org.br/unidades/avenida-paulista/</a>.</li>
+      <li>Itaú Cultural. Site oficial: <a href="https://www.itaucultural.org.br/">https://www.itaucultural.org.br/</a>.</li>
+      <li>Centro Cultural Fiesp. Site oficial: <a href="https://www.centroculturalfiesp.com.br/">https://www.centroculturalfiesp.com.br/</a>.</li>
+      <li>Instituto Moreira Salles. IMS Paulista: <a href="https://ims.com.br/">https://ims.com.br/</a>.</li>
+      <li>Guia da Semana. Lugares imperdíveis para visitar na Avenida Paulista: <a href="https://www.guiadasemana.com.br/na-cidade/galeria/lugares-imperdiveis-para-visitar-na-avenida-paulista">guiadasemana.com.br</a>.</li>
+      <li>São Paulo Secreto. Roteiro de espaços culturais da Avenida Paulista: <a href="https://saopaulosecreto.com/avenida-paulista-roteiro-espacos-culturais/">saopaulosecreto.com</a>.</li>
+    </ul>
+    <p>Licenciatura em Pedagogia · Instituto Federal de São Paulo, Campus São Roque.</p>
+  </div>
+</footer>
+
+<script>
+const stops = [
+  {where:"IFSP Campus São Roque", addr:"Rodovia Prefeito Quintino de Lima, 2100, Paisagem Colonial, São Roque", q:"-23.554757,-47.150227",
+   people:[["Isabelly Andrade Silva Oliveira","PED 2"],["Raroane Miguel de Oliveira","PED 2"],["Marya Clara Calazans Paula","PED 2"],["Geisiane Priscila Vieira Pinto","PED 2"],["Daniele da Costa Silva","PED 2"],["Maila Darilene de Souza Vasques","PED 2"],["Joice Vieira Leite","PED 4"]]},
+  {where:"Brasital: Terminal Rodoviário de São Roque", addr:"Av. Araçaí, 1, Centro, São Roque (ao lado do Estância Supermercados)", q:"-23.531893,-47.132761",
+   people:[["Jennifer Larissa dos Santos Fernandes","PED 2"],["Savio Augusto Pontes de Moraes","acompanhante"],["Heloísa Santos Lacerda","PED 2"],["Emmerson José Ferreira Pinto Junior","PED 2"],["Tamara Varjão de Carvalho Mariano","acompanhante"],["Rubia Rossini da Silva","PED 2"],["Guilherme Dantas Lopes da Silva","BAD 6"],["Yasmim Clara Nogueron Borba","PED 2"],["Rebeca Alves","PED 2"],["Lucas Vinicius Prestes Mendes","PED 2"],["Laura Stephanie Mascarenhas Oliveira","PED 2"]]},
+  {where:"Mailasqui: km 54 da Raposo Tavares", addr:"Ponto anterior ao viaduto Vasco Barioni, sentido capital", q:"-23.55373,-47.08987",
+   people:[["Gabriel Phillip","PED 4"],["Eloah Crivellari",""],["Leonardo Fiuza",""]]},
+  {where:"Alto da Serra", addr:"Ponto de ônibus na Rodovia Raposo Tavares, sentido capital", q:"-23.57964,-47.06081",
+   people:[["Isabella Oliveira Martins","PED 4"]]},
+  {where:"Vargem Grande Paulista: km 44,5 da Raposo Tavares", addr:"Passarela de Vargem Grande Paulista, sentido capital", q:"-23.605636,-47.024287", approx:true,
+   people:[["Gabriela Cristina de Oliveira Godinho","PED 4"]]},
+  {where:"Cotia: km 36 da Raposo Tavares", addr:"Ponto de ônibus após o radar, sentido capital", q:"-23.612581,-46.956899", approx:true,
+   people:[["Raquel Pereira Rodrigues","PED 4"]]},
+  {where:"Shopping Granja Vianna", addr:"Rodovia Raposo Tavares, km 23,5, Cotia", q:"-23.592098,-46.832799",
+   people:[["Profa. Tatiane",""]]},
+  {where:"Destino: Av. Paulista, 52 (Japan House)", addr:"Bela Vista, São Paulo", q:"Av. Paulista, 52 - Bela Vista, São Paulo - SP", dest:true, people:[]}
+];
+
+const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
+const route = document.getElementById("route");
+
+stops.forEach((s,i)=>{
+  const li = document.createElement("li");
+  li.className = "stop" + (s.dest ? " dest" : "");
+  const n = s.people.length;
+  const peopleHtml = s.dest
+    ? '<p class="note">Desembarque de todos os 25 passageiros.</p>'
+    : '<span class="count">' + n + (n===1 ? ' pessoa embarca' : ' pessoas embarcam') + '</span>' +
+      '<ul class="people">' + s.people.map(p => '<li data-n="' + norm(p[0]) + '">' + p[0] + (p[1] ? ' <small>(' + p[1] + ')</small>' : '') + '</li>').join('') + '</ul>';
+  li.innerHTML = '<div class="num">' + (i+1) + '</div>' +
+    '<div class="card"><h3>' + s.where + '</h3><p class="where">' + s.addr + '</p>' + peopleHtml +
+    '<a class="maplink" href="https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(s.q) + '">Ver este ponto no Google Maps</a>' +
+    (s.approx ? '<p class="note">Localização aproximada.</p>' : '') + '</div>';
+  route.appendChild(li);
+});
+
+const q = document.getElementById("q"), hint = document.getElementById("hint");
+q.addEventListener("input", ()=>{
+  const term = norm(q.value.trim());
+  let found = 0, first = null;
+  document.querySelectorAll(".stop").forEach(st=>{
+    let any = false;
+    st.querySelectorAll("li[data-n]").forEach(li=>{
+      const hit = term.length>=2 && li.dataset.n.includes(term);
+      li.classList.toggle("hit", hit);
+      if(hit){any = true; found++;}
+    });
+    st.classList.toggle("dim", term.length>=2 && !any && !st.classList.contains("dest"));
+    if(any && !first) first = st;
+  });
+  if(term.length<2){hint.textContent="";return;}
+  hint.textContent = found ? found + (found===1 ? " resultado encontrado." : " resultados encontrados.") : "Nenhum nome encontrado.";
+  if(first) first.scrollIntoView({behavior:"smooth",block:"center"});
+});
+</script>
+</body>
+</html>
