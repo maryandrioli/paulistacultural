@@ -191,7 +191,7 @@
     <div class="bus-box">
       <div class="summary">
         <span class="pill"><b id="nStops">8</b> paradas</span>
-        <span class="pill"><b id="nPass">37</b> passageiros</span>
+        <span class="pill"><b id="nPass">38</b> passageiros</span>
         <span class="pill">cerca de <b>65 km</b></span>
         <span class="pill">Saída do IFSP: <b>8h</b></span>
         <span class="pill">Retorno do IMS: <b>16h30</b></span>
@@ -476,7 +476,7 @@ const stops = [
   {where:"IFSP Campus São Roque", addr:"Rodovia Prefeito Quintino de Lima, 2100, Paisagem Colonial, São Roque", q:"-23.554757,-47.150227",
    people:[["Isabelly","PED 2"],["Raroane","PED 2"],["Marya Clara","PED 2"],["Geisiane Priscila","PED 2"],["Daniele","PED 2"],["Maila Darilene","PED 2"],["Joice","PED 4"],["Mauricio","convidado"],["Bruno","convidado"],["André","convidado"],["Heloísa","convidada"],["Mary Grace","profa."],["Sandro Zarpelão","prof."],["Raquel da Silva","profa."]]},
   {where:"Brasital: Terminal Rodoviário de São Roque", addr:"Av. Araçaí, 1, Centro, São Roque (ao lado do Estância Supermercados)", q:"-23.531893,-47.132761",
-   people:[["Jennifer Larissa","PED 2"],["Savio Augusto","acompanhante"],["Heloísa Santos","PED 2"],["Emmerson José","PED 2"],["Tamara","acompanhante"],["Rubia","PED 2"],["Guilherme","convidado"],["Yasmim Clara","PED 2"],["Rebeca","PED 2"],["Lucas Vinicius","PED 2"],["Laura Stephanie","PED 2"],["Ana Gabrielli","PED 2"],["Davi Lucas","convidado"],["Ademar Miguel","convidado"]]},
+   people:[["Jennifer Larissa","PED 2"],["Savio Augusto","acompanhante"],["Heloísa Santos","PED 2"],["Tamara","acompanhante"],["Rubia","PED 2"],["Guilherme","convidado"],["Yasmim Clara","PED 2"],["Rebeca","PED 2"],["Lucas Vinicius","PED 2"],["Laura Stephanie","PED 2"],["Ana Gabrielli","PED 2"],["Davi Lucas","convidado"],["Ademar Miguel","convidado"],["Marcos Vinicius","PED 4"],["Suellen","PED 2"]]},
   {where:"Mailasqui: km 54 da Raposo Tavares", addr:"Ponto anterior ao viaduto Vasco Barioni, sentido capital", q:"-23.55373,-47.08987",
    people:[["Gabriel Phillip","PED 4"],["Eloah","PED 4"],["Leonardo","PED 2"]]},
   {where:"Alto da Serra", addr:"Ponto de ônibus na Rodovia Raposo Tavares, sentido capital", q:"-23.57964,-47.06081",
@@ -488,8 +488,8 @@ const stops = [
   {where:"Shopping Granja Vianna", addr:"Rodovia Raposo Tavares, km 23,5, Cotia", q:"-23.592098,-46.832799",
    people:[["Profa. Tatiane",""]]},
   {where:"Destino: Av. Paulista, 52 (Japan House)", addr:"Bela Vista, São Paulo", q:"Av. Paulista, 52 - Bela Vista, São Paulo - SP", dest:true, people:[]},
-  {where:"Direto na Casa das Rosas", addr:"Av. Paulista, 37 (não vai de ônibus; encontra o grupo no local)", q:"Casa das Rosas, Av. Paulista, 37, São Paulo", direct:true,
-   people:[["Larissa",""],["Gabriela","profa."],["Ana Luiza","PED 4"]]}
+  {where:"Direto na Japan House", addr:"Av. Paulista, 52 (não vai de ônibus; encontra o grupo no local)", q:"Japan House São Paulo, Av. Paulista, 52, São Paulo", direct:true,
+   people:[["Larissa",""],["Gabriela","profa."],["Ana Luiza","PED 4"],["Emmerson José","PED 2"]]}
 ];
 const busTotal = stops.filter(s=>!s.direct).reduce((t,s)=>t+s.people.length,0);
 const busStops = stops.filter(s=>!s.direct).length;
@@ -555,7 +555,7 @@ function ckUpdate(){
   const falta = busTotal - busOn;
   document.getElementById("ckCount").innerHTML = "<b>" + busOn + "</b> de " + busTotal + " no ônibus · " +
     (falta===0 ? "todos embarcaram" : "falta" + (falta===1 ? " " : "m ") + "<b>" + falta + "</b>") +
-    (dirTotal ? "<br><small>Direto na Casa das Rosas: " + dirOn + " de " + dirTotal + "</small>" : "");
+    (dirTotal ? "<br><small>Direto na Japan House: " + dirOn + " de " + dirTotal + "</small>" : "");
   document.getElementById("ckBar").style.width = (busTotal ? busOn/busTotal*100 : 0) + "%";
 }
 document.addEventListener("change", e=>{
