@@ -140,8 +140,13 @@
   .ok{color:var(--accent);font-weight:700}
   .pend{color:var(--bus);font-weight:700}
 
-  ul.tips{margin:0;padding-left:20px}
-  ul.tips li{margin:6px 0}
+  fieldset.lev-cat{border:1px solid var(--line);border-radius:10px;padding:8px 12px 6px;margin:0 0 12px}
+  fieldset.lev-cat legend{font-weight:700;color:var(--bus-dark);padding:0 6px}
+  .lev-sub{margin:6px 0 0;font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+  ul.lev{list-style:none;margin:0 0 4px;padding:0}
+  ul.lev label{display:flex;align-items:center;gap:10px;min-height:42px;cursor:pointer;padding:2px 4px;border-radius:6px}
+  ul.lev input{flex:0 0 auto;width:24px;height:24px;accent-color:var(--accent)}
+  ul.lev li.on label{color:var(--muted);text-decoration:line-through}
 
   /* Equipe */
   .grid{display:grid;gap:12px}
@@ -390,20 +395,50 @@
 
     <div class="card">
       <h3>O que levar</h3>
-      <ul class="tips">
-        <li>Lanche para consumir no ônibus</li>
-        <li>Roupas leves e confortáveis</li>
-        <li>Tênis confortável para a caminhada (são cerca de 3 km pela avenida)</li>
-        <li>Boné</li>
-        <li>Protetor solar</li>
-        <li>Garrafa de água</li>
-        <li>Dinheiro ou cartão para o almoço, o lanche ou outra necessidade pessoal</li>
-        <li>Documento com foto</li>
-        <li>Celular carregado ou carregador portátil</li>
-        <li>Mochila ou bolsa pequena, para maior conforto</li>
-        <li>Medicamentos de uso pessoal</li>
-        <li>Contatos relevantes para emergência</li>
-      </ul>
+      <p class="ck-count" id="levCount"></p>
+      <div class="ck-bar" aria-hidden="true"><span id="levBar"></span></div>
+      <fieldset class="lev-cat">
+        <legend>Vestuário e proteção</legend>
+        <p class="lev-sub">Roupas e calçados</p>
+        <ul class="lev">
+          <li><label><input type="checkbox" data-lev="l1"><span>Roupas leves e confortáveis</span></label></li>
+          <li><label><input type="checkbox" data-lev="l2"><span>Tênis confortável para a caminhada (são cerca de 3 km pela avenida)</span></label></li>
+        </ul>
+        <p class="lev-sub">Proteção contra o sol</p>
+        <ul class="lev">
+          <li><label><input type="checkbox" data-lev="l3"><span>Boné</span></label></li>
+          <li><label><input type="checkbox" data-lev="l4"><span>Protetor solar</span></label></li>
+        </ul>
+      </fieldset>
+      <fieldset class="lev-cat">
+        <legend>Alimentação e hidratação</legend>
+        <ul class="lev">
+          <li><label><input type="checkbox" data-lev="l5"><span>Lanche para consumir no ônibus</span></label></li>
+          <li><label><input type="checkbox" data-lev="l6"><span>Garrafa de água</span></label></li>
+        </ul>
+      </fieldset>
+      <fieldset class="lev-cat">
+        <legend>Documentos, dinheiro e comunicação</legend>
+        <p class="lev-sub">Documentos e dinheiro</p>
+        <ul class="lev">
+          <li><label><input type="checkbox" data-lev="l7"><span>Documento com foto</span></label></li>
+          <li><label><input type="checkbox" data-lev="l8"><span>Dinheiro ou cartão para o almoço, o lanche ou outra necessidade pessoal</span></label></li>
+        </ul>
+        <p class="lev-sub">Comunicação</p>
+        <ul class="lev">
+          <li><label><input type="checkbox" data-lev="l9"><span>Celular carregado ou carregador portátil</span></label></li>
+          <li><label><input type="checkbox" data-lev="l10"><span>Contatos relevantes para emergência</span></label></li>
+        </ul>
+      </fieldset>
+      <fieldset class="lev-cat">
+        <legend>Saúde e conforto</legend>
+        <ul class="lev">
+          <li><label><input type="checkbox" data-lev="l11"><span>Medicamentos de uso pessoal</span></label></li>
+          <li><label><input type="checkbox" data-lev="l12"><span>Mochila ou bolsa pequena, para maior conforto</span></label></li>
+        </ul>
+      </fieldset>
+      <div class="ck-actions"><button type="button" class="ck-reset" id="levReset">Desmarcar tudo</button></div>
+      <p class="note">Toque em cada item ao separá-lo. As marcações ficam salvas apenas neste celular ou computador.</p>
     </div>
   </section>
 
@@ -605,6 +640,24 @@ document.getElementById("ckReset").addEventListener("click", ()=>{
   ck = {}; ckSave(); ckUpdate();
 });
 ckUpdate();
+
+/* Checklist do que levar (salvo só neste aparelho) */
+const LEV_KEY = "paulistacultural-levar-v1";
+let lev = {};
+try{ lev = JSON.parse(localStorage.getItem(LEV_KEY) || "{}") || {}; }catch(e){ lev = {}; }
+function levUpdate(){
+  const boxes = [...document.querySelectorAll("input[data-lev]")];
+  let on = 0;
+  boxes.forEach(b=>{ b.checked = !!lev[b.dataset.lev]; b.closest("li").classList.toggle("on", b.checked); if(b.checked) on++; });
+  document.getElementById("levCount").innerHTML = "<b>" + on + "</b> de " + boxes.length + " itens separados" + (on===boxes.length ? " · tudo pronto" : "");
+  document.getElementById("levBar").style.width = (boxes.length ? on/boxes.length*100 : 0) + "%";
+}
+document.addEventListener("change", e=>{
+  const b = e.target;
+  if(b.matches("input[data-lev]")){ if(b.checked) lev[b.dataset.lev] = 1; else delete lev[b.dataset.lev]; try{ localStorage.setItem(LEV_KEY, JSON.stringify(lev)); }catch(err){} levUpdate(); }
+});
+document.getElementById("levReset").addEventListener("click", ()=>{ lev = {}; try{ localStorage.setItem(LEV_KEY, "{}"); }catch(e){} levUpdate(); });
+levUpdate();
 
 /* Copiar chave Pix */
 document.getElementById("copy").addEventListener("click", async ()=>{
