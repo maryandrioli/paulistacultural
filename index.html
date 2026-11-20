@@ -140,6 +140,9 @@
   .ok{color:var(--accent);font-weight:700}
   .pend{color:var(--bus);font-weight:700}
 
+  ul.tips{margin:0;padding-left:20px}
+  ul.tips li{margin:6px 0}
+
   /* Equipe */
   .grid{display:grid;gap:12px}
   @media(min-width:640px){.grid.two{grid-template-columns:1fr 1fr}}
@@ -176,6 +179,7 @@
   <div class="wrap" role="tablist">
     <a class="tab" role="tab" href="#onibus" data-tab="onibus">🚌 Ônibus e embarques</a>
     <a class="tab" role="tab" href="#roteiro" data-tab="roteiro">📍 Roteiro na Paulista</a>
+    <a class="tab" role="tab" href="#antes" data-tab="antes">📝 Inscrição e o que levar</a>
     <a class="tab" role="tab" href="#pagamento" data-tab="pagamento">💳 Pagamento</a>
     <a class="tab" role="tab" href="#equipe" data-tab="equipe">👥 Equipe</a>
   </div>
@@ -372,6 +376,37 @@
     <p class="note">Informações sobre exposições e horários atualizadas em 19/11/2026. A programação pode mudar; confira os sites antes da visita.</p>
   </section>
 
+  <!-- INSCRIÇÃO E O QUE LEVAR -->
+  <section class="panel" id="antes" role="tabpanel" aria-labelledby="t-antes">
+    <h2 id="t-antes">Inscrição, certificado e o que levar</h2>
+    <p class="lead">A inscrição na Visita Técnica (estudo do meio) é feita pelo SUAP, e o certificado é emitido pelo mesmo sistema.</p>
+
+    <div class="card" style="margin-bottom:14px">
+      <h3>Inscrição e certificado</h3>
+      <p style="margin:0 0 12px">Faça sua inscrição pelo link abaixo. Depois da visita, o certificado fica disponível no mesmo endereço.</p>
+      <a class="btn" href="https://suap.ifsp.edu.br/eventos/inscricao_publica/20427/">Fazer inscrição e obter certificado</a>
+      <p class="note">suap.ifsp.edu.br/eventos/inscricao_publica/20427</p>
+    </div>
+
+    <div class="card">
+      <h3>O que levar</h3>
+      <ul class="tips">
+        <li>Lanche para consumir no ônibus</li>
+        <li>Roupas leves e confortáveis</li>
+        <li>Tênis confortável para a caminhada (são cerca de 3 km pela avenida)</li>
+        <li>Boné</li>
+        <li>Protetor solar</li>
+        <li>Garrafa de água</li>
+        <li>Dinheiro ou cartão para o almoço, o lanche ou outra necessidade pessoal</li>
+        <li>Documento com foto</li>
+        <li>Celular carregado ou carregador portátil</li>
+        <li>Mochila ou bolsa pequena, para maior conforto</li>
+        <li>Medicamentos de uso pessoal</li>
+        <li>Contatos relevantes para emergência</li>
+      </ul>
+    </div>
+  </section>
+
   <!-- PAGAMENTO -->
   <section class="panel" id="pagamento" role="tabpanel" aria-labelledby="t-pagamento">
     <h2 id="t-pagamento">Pagamento e prestação de contas</h2>
@@ -453,7 +488,7 @@
 <script>
 document.body.classList.remove("no-js");
 
-/* Abas com endereço (#onibus, #roteiro, #pagamento, #equipe) */
+/* Abas com endereço (#onibus, #roteiro, #antes, #pagamento, #equipe) */
 const tabs = [...document.querySelectorAll(".tab")];
 const panels = [...document.querySelectorAll(".panel")];
 function show(id){
@@ -486,7 +521,7 @@ const stops = [
   {where:"Cotia: km 36 da Raposo Tavares", addr:"Ponto de ônibus após o radar, sentido capital", q:"-23.612581,-46.956899", approx:true,
    people:[["Raquel Pereira","PED 4"],["Mariana",""],["Amanda Beatriz","PED 2"]]},
   {where:"Shopping Granja Vianna", addr:"Rodovia Raposo Tavares, km 23,5, Cotia", q:"-23.592098,-46.832799",
-   people:[["Profa. Tatiane",""]]},
+   people:[["Tatiane","profa."]]},
   {where:"Destino: Av. Paulista, 52 (Japan House)", addr:"Bela Vista, São Paulo", q:"Av. Paulista, 52 - Bela Vista, São Paulo - SP", dest:true, people:[]},
   {where:"Direto na Japan House", addr:"Av. Paulista, 52 (não vai de ônibus; encontra o grupo no local)", q:"Japan House São Paulo, Av. Paulista, 52, São Paulo", direct:true,
    people:[["Larissa",""],["Gabriela","profa."],["Ana Luiza","PED 4"],["Emmerson José","PED 2"],["Convidados do Emmerson","quantidade a confirmar"]]}
