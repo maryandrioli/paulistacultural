@@ -159,6 +159,40 @@
   footer ul{padding-left:18px}
   footer li{margin:4px 0}
 
+  /* Fotos da visita */
+  .drive-box{display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:var(--accent-soft);border-radius:var(--radius);padding:14px 16px;margin:0 0 18px}
+  .drive-box p{margin:0;flex:1 1 260px;font-size:.95rem}
+  .drive-box .btn{background:var(--accent)}
+  .gal-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:22px 0 10px}
+  .gal-head h3{margin:0;font-size:1.25rem}
+  .gal-head span{color:var(--muted);font-size:.92rem}
+  .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
+  @media(min-width:640px){.gallery{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}}
+  .thumb{position:relative;display:block;width:100%;aspect-ratio:1/1;padding:0;border:0;border-radius:10px;overflow:hidden;background:var(--line);cursor:zoom-in}
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .2s}
+  .thumb:hover img{transform:scale(1.04)}
+  .thumb.video{cursor:pointer;background:var(--concrete)}
+  .thumb .play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+  .thumb .play span{width:52px;height:52px;border-radius:50%;background:rgba(200,32,30,.92);color:#fff;font-size:1.3rem;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,.35)}
+  .thumb .dur{position:absolute;right:6px;bottom:6px;background:rgba(0,0,0,.7);color:#fff;font-size:.78rem;font-weight:700;padding:1px 7px;border-radius:5px}
+  .more{margin:14px auto 0;display:flex}
+  .gal-msg{background:#fff;border:1px dashed var(--line);border-radius:10px;padding:14px;color:var(--muted);font-size:.95rem}
+  /* Visualizador ampliado */
+  .lb{position:fixed;inset:0;z-index:100;background:rgba(18,20,22,.96);display:none;flex-direction:column;color:#fff}
+  .lb.open{display:flex}
+  .lb-top{display:flex;align-items:center;gap:8px;padding:10px 12px;flex-wrap:wrap}
+  .lb-back{min-height:44px;padding:0 16px;border-radius:999px;border:0;background:var(--bus);color:#fff;font:700 .95rem "Source Sans 3",sans-serif;cursor:pointer}
+  .lb-count{font-size:.92rem;opacity:.85;margin-right:auto}
+  .lb-drive{min-height:44px;display:inline-flex;align-items:center;padding:0 14px;border-radius:999px;border:1px solid rgba(255,255,255,.4);color:#fff;text-decoration:none;font-weight:600;font-size:.9rem}
+  .lb-stage{flex:1;position:relative;display:flex;align-items:center;justify-content:center;min-height:0;padding:0 8px 12px}
+  .lb-stage img{max-width:100%;max-height:100%;object-fit:contain;border-radius:6px}
+  .lb-stage iframe{width:min(100%,1100px);height:100%;max-height:80vh;border:0;border-radius:6px;background:#000}
+  .lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;border:0;background:rgba(255,255,255,.18);color:#fff;font-size:1.5rem;cursor:pointer}
+  .lb-nav:hover{background:rgba(255,255,255,.32)}
+  .lb-prev{left:10px}.lb-next{right:10px}
+  .lb-load{position:absolute;font-size:.95rem;opacity:.8}
+  body.lb-lock{overflow:hidden}
+
   @media(min-width:720px){
     body{font-size:18px}
     header.hero{min-height:400px}
@@ -187,6 +221,7 @@
     <a class="tab" role="tab" href="#antes" data-tab="antes">📝 Inscrição e o que levar</a>
     <a class="tab" role="tab" href="#pagamento" data-tab="pagamento">💳 Pagamento</a>
     <a class="tab" role="tab" href="#equipe" data-tab="equipe">👥 Equipe</a>
+    <a class="tab" role="tab" href="#fotos" data-tab="fotos">📷 Fotos da visita</a>
   </div>
 </nav>
 
@@ -503,7 +538,40 @@
     </div>
   </section>
 
+  <!-- FOTOS DA VISITA -->
+  <section class="panel" id="fotos" role="tabpanel" aria-labelledby="t-fotos">
+    <h2 id="t-fotos">Fotos da visita</h2>
+    <p class="lead">Registros feitos pelas turmas e pela equipe durante a visita. Toque em uma foto para ampliá-la ou em um vídeo para assisti-lo aqui mesmo.</p>
+
+    <div class="drive-box">
+      <p>A pasta completa no Google Drive abre em uma <b>nova guia</b>. Para voltar, basta fechá-la: esta página continua aberta na aba de fotos.</p>
+      <a class="btn" id="driveFolder" href="https://drive.google.com/drive/folders/18q6Oohm4ZPcdGCot9zJt-UyrGZ1E5aHP" target="_blank" rel="noopener">Abrir a pasta completa no Drive</a>
+    </div>
+
+    <div class="gal-head"><h3>📷 Fotos</h3><span id="photoCount"></span></div>
+    <div class="gallery" id="photoGrid"></div>
+    <button type="button" class="btn light more" id="photoMore" hidden>Mostrar mais fotos</button>
+
+    <div class="gal-head"><h3>🎬 Vídeos</h3><span id="videoCount"></span></div>
+    <div class="gallery" id="videoGrid"></div>
+    <button type="button" class="btn light more" id="videoMore" hidden>Mostrar mais vídeos</button>
+  </section>
+
 </main>
+
+<!-- Visualizador ampliado das fotos e vídeos -->
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Visualizador de fotos e vídeos" hidden>
+  <div class="lb-top">
+    <button type="button" class="lb-back" id="lbBack">← Voltar às fotos</button>
+    <span class="lb-count" id="lbCount"></span>
+    <a class="lb-drive" id="lbDrive" href="#" target="_blank" rel="noopener">Abrir no Drive (nova guia)</a>
+  </div>
+  <div class="lb-stage" id="lbStage">
+    <span class="lb-load" id="lbLoad">Carregando…</span>
+    <button type="button" class="lb-nav lb-prev" id="lbPrev" aria-label="Anterior">‹</button>
+    <button type="button" class="lb-nav lb-next" id="lbNext" aria-label="Próxima">›</button>
+  </div>
+</div>
 
 <footer>
   <div class="wrap">
@@ -520,10 +588,11 @@
   </div>
 </footer>
 
+<script src="fotos-lista.js"></script>
 <script>
 document.body.classList.remove("no-js");
 
-/* Abas com endereço (#onibus, #roteiro, #antes, #pagamento, #equipe) */
+/* Abas com endereço (#onibus, #roteiro, #antes, #pagamento, #equipe, #fotos) */
 const tabs = [...document.querySelectorAll(".tab")];
 const panels = [...document.querySelectorAll(".panel")];
 function show(id){
@@ -669,6 +738,184 @@ document.getElementById("copy").addEventListener("click", async ()=>{
     msg.textContent = "Não foi possível copiar automaticamente. Selecione a chave acima.";
   }
 });
+
+/* ===== Fotos da visita (lista automática pela API do Google Drive) =====
+   Para funcionar, cole abaixo a chave da API do Google Drive (Google Cloud),
+   restrita ao endereço https://maryandrioli.github.io/paulistacultural/*
+   A pasta precisa estar compartilhada como "qualquer pessoa com o link".
+   Sem a chave, a galeria usa a lista do arquivo fotos-lista.js. */
+const DRIVE_API_KEY = "";
+const DRIVE_FOLDER = "18q6Oohm4ZPcdGCot9zJt-UyrGZ1E5aHP";
+const PAGE = 48;
+(function(){
+  const pGrid = document.getElementById("photoGrid"), vGrid = document.getElementById("videoGrid");
+  const pMore = document.getElementById("photoMore"), vMore = document.getElementById("videoMore");
+  const pCount = document.getElementById("photoCount"), vCount = document.getElementById("videoCount");
+  const thumb = (id, w) => `https://drive.google.com/thumbnail?id=${id}&sz=w${w}`;
+  const view = id => `https://drive.google.com/file/d/${id}/view`;
+  let photos = [], videos = [], shown = {p:0, v:0};
+
+  function msg(grid, text){ grid.innerHTML = `<div class="gal-msg" style="grid-column:1/-1">${text}</div>`; }
+  const folderLink = `<a href="https://drive.google.com/drive/folders/${DRIVE_FOLDER}" target="_blank" rel="noopener">abra a pasta no Drive</a>`;
+
+  function when(f){ return (f.imageMediaMetadata && f.imageMediaMetadata.time) ? f.imageMediaMetadata.time.replace(/^(\d{4}):(\d{2}):(\d{2})/, "$1-$2-$3") : (f.createdTime || ""); }
+  function dur(ms){ if(!ms) return ""; const t = Math.round(ms/1000); return Math.floor(t/60) + ":" + String(t%60).padStart(2,"0"); }
+
+  async function listAll(){
+    let out = [], token = "";
+    do{
+      const u = new URL("https://www.googleapis.com/drive/v3/files");
+      u.searchParams.set("q", `'${DRIVE_FOLDER}' in parents and trashed=false`);
+      u.searchParams.set("fields", "nextPageToken,files(id,name,mimeType,size,createdTime,imageMediaMetadata(time),videoMediaMetadata(durationMillis))");
+      u.searchParams.set("pageSize", "1000");
+      u.searchParams.set("key", DRIVE_API_KEY);
+      if(token) u.searchParams.set("pageToken", token);
+      const r = await fetch(u);
+      if(!r.ok) throw new Error(r.status);
+      const d = await r.json();
+      out = out.concat(d.files || []);
+      token = d.nextPageToken || "";
+    } while(token);
+    return out;
+  }
+
+  /* Vídeos repetidos: mesmo tamanho de arquivo (ex.: .mov e .mp4 idênticos). Mantém o .mp4. */
+  function dedupe(list){
+    const by = new Map();
+    list.forEach(f=>{
+      const k = f.size || f.id;
+      const cur = by.get(k);
+      if(!cur || (/\.mp4$/i.test(f.name) && !/\.mp4$/i.test(cur.name))) by.set(k, f);
+    });
+    return [...by.values()];
+  }
+
+  function cell(f, i, kind){
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "thumb" + (kind === "v" ? " video" : "");
+    b.setAttribute("aria-label", (kind === "v" ? "Assistir ao vídeo " : "Ampliar a foto ") + (i+1));
+    const img = document.createElement("img");
+    img.loading = "lazy"; img.alt = ""; img.referrerPolicy = "no-referrer";
+    img.src = thumb(f.id, 400);
+    img.onerror = () => img.remove();
+    b.appendChild(img);
+    if(kind === "v"){
+      b.insertAdjacentHTML("beforeend", `<span class="play"><span>▶</span></span>` + (dur(f.videoMediaMetadata && +f.videoMediaMetadata.durationMillis) ? `<span class="dur">${dur(+f.videoMediaMetadata.durationMillis)}</span>` : ""));
+    }
+    b.addEventListener("click", () => openLb(kind, i));
+    return b;
+  }
+  function render(kind){
+    const list = kind === "p" ? photos : videos, grid = kind === "p" ? pGrid : vGrid, more = kind === "p" ? pMore : vMore;
+    const end = Math.min(list.length, shown[kind] + PAGE);
+    for(let i = shown[kind]; i < end; i++) grid.appendChild(cell(list[i], i, kind));
+    shown[kind] = end;
+    more.hidden = end >= list.length;
+  }
+  pMore.addEventListener("click", () => render("p"));
+  vMore.addEventListener("click", () => render("v"));
+
+  /* Lista guardada em fotos-lista.js: usada enquanto não houver chave da API ou se a consulta falhar */
+  function fromList(){
+    const L = window.FOTOS_LISTA || {fotos:"", videos:""};
+    photos = (L.fotos || "").split(/\s+/).filter(Boolean).map(id => ({id}));
+    videos = (L.videos || "").split(/\s+/).filter(Boolean).map(id => ({id}));
+  }
+  function paintAll(){
+    pGrid.innerHTML = ""; vGrid.innerHTML = ""; shown = {p:0, v:0};
+    pCount.textContent = photos.length + (photos.length === 1 ? " foto" : " fotos");
+    vCount.textContent = videos.length + (videos.length === 1 ? " vídeo" : " vídeos");
+    if(photos.length) render("p"); else msg(pGrid, `Ainda não há fotos aqui. Você pode ${folderLink} (nova guia).`);
+    if(videos.length) render("v"); else msg(vGrid, "Ainda não há vídeos aqui.");
+  }
+  async function load(){
+    if(DRIVE_API_KEY){
+      msg(pGrid, "Carregando fotos…"); msg(vGrid, "Carregando vídeos…");
+      try{
+        const files = await listAll();
+        photos = files.filter(f => /^image\//.test(f.mimeType) && !/STICKER/i.test(f.name)).sort((a,b) => when(a).localeCompare(when(b)));
+        videos = dedupe(files.filter(f => /^video\//.test(f.mimeType))).sort((a,b) => (a.createdTime||"").localeCompare(b.createdTime||""));
+        paintAll();
+        return;
+      }catch(e){ /* segue para a lista guardada */ }
+    }
+    fromList();
+    paintAll();
+  }
+
+  /* Visualizador: fica dentro da página; fechar (botão, Esc, voltar do navegador) retorna à aba de fotos */
+  const lb = document.getElementById("lb"), stage = document.getElementById("lbStage");
+  const lbCount = document.getElementById("lbCount"), lbDrive = document.getElementById("lbDrive"), lbLoad = document.getElementById("lbLoad");
+  let cur = {kind:"p", i:0}, media = null, pushed = false;
+
+  function paint(){
+    const list = cur.kind === "p" ? photos : videos, f = list[cur.i];
+    if(media){ if(media.tagName === "IFRAME") media.src = "about:blank"; media.remove(); }
+    lbLoad.hidden = false;
+    if(cur.kind === "p"){
+      media = document.createElement("img");
+      media.alt = "Foto " + (cur.i+1) + " da visita";
+      media.referrerPolicy = "no-referrer";
+      media.onload = () => lbLoad.hidden = true;
+      media.src = thumb(f.id, 1600);
+    }else{
+      media = document.createElement("iframe");
+      media.allow = "autoplay; fullscreen";
+      media.allowFullscreen = true;
+      media.title = "Vídeo " + (cur.i+1) + " da visita";
+      media.onload = () => lbLoad.hidden = true;
+      media.src = `https://drive.google.com/file/d/${f.id}/preview`;
+    }
+    stage.insertBefore(media, lbLoad);
+    lbCount.textContent = (cur.kind === "p" ? "Foto " : "Vídeo ") + (cur.i+1) + " de " + list.length;
+    lbDrive.href = view(f.id);
+    document.getElementById("lbPrev").hidden = list.length < 2;
+    document.getElementById("lbNext").hidden = list.length < 2;
+  }
+  function openLb(kind, i){
+    cur = {kind, i};
+    lb.hidden = false; lb.classList.add("open"); document.body.classList.add("lb-lock");
+    paint();
+    if(!pushed){ history.pushState({lb:1}, "", "#fotos"); pushed = true; }
+    document.getElementById("lbBack").focus();
+  }
+  function closeLb(fromHistory){
+    if(!lb.classList.contains("open")) return;
+    if(media){ if(media.tagName === "IFRAME") media.src = "about:blank"; media.remove(); media = null; }
+    lb.classList.remove("open"); lb.hidden = true; document.body.classList.remove("lb-lock");
+    if(pushed && !fromHistory){ pushed = false; history.back(); } else pushed = false;
+    show("fotos");
+    const grid = cur.kind === "p" ? pGrid : vGrid, btn = grid.children[cur.i];
+    if(btn && btn.focus) btn.focus({preventScroll:false});
+  }
+  function step(d){
+    const list = cur.kind === "p" ? photos : videos;
+    cur.i = (cur.i + d + list.length) % list.length;
+    if(cur.kind === "p" ? cur.i >= shown.p : cur.i >= shown.v){ while((cur.kind === "p" ? shown.p : shown.v) <= cur.i) render(cur.kind); }
+    paint();
+  }
+  document.getElementById("lbBack").addEventListener("click", () => closeLb(false));
+  document.getElementById("lbPrev").addEventListener("click", () => step(-1));
+  document.getElementById("lbNext").addEventListener("click", () => step(1));
+  lb.addEventListener("click", e => { if(e.target === stage) closeLb(false); });
+  document.addEventListener("keydown", e => {
+    if(!lb.classList.contains("open")) return;
+    if(e.key === "Escape") closeLb(false);
+    else if(e.key === "ArrowLeft") step(-1);
+    else if(e.key === "ArrowRight") step(1);
+  });
+  window.addEventListener("popstate", () => { if(lb.classList.contains("open")) closeLb(true); });
+  let x0 = null;
+  stage.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; }, {passive:true});
+  stage.addEventListener("touchend", e => {
+    if(x0 === null || cur.kind !== "p") return;
+    const dx = e.changedTouches[0].clientX - x0; x0 = null;
+    if(Math.abs(dx) > 50) step(dx < 0 ? 1 : -1);
+  });
+
+  load();
+})();
 </script>
 </body>
 </html>
